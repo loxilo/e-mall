@@ -1,0 +1,30 @@
+const mongoose = require('mongoose');
+//用户数据模型
+const userSchema = new mongoose.Schema({
+	"userId":String,
+	"userName":String,
+	"userPwd":String,
+	"orderList":[
+		{
+			"name":String,
+			"tel":String,
+			"address":String,
+			"isDefault":Boolean
+		}
+	],
+	"cartList":[
+		{
+			"productData":{
+				"productId":String,
+				"productName":String,
+				"productPrice":Number,
+				"productImg":String,
+			},
+			"checked":Boolean,
+			"productNum":Number
+		}
+	],
+	"addressList":Array
+});
+//导出
+module.exports=mongoose.model('User',userSchema);
