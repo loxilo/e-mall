@@ -119,22 +119,36 @@ router.post('/register',async ctx=>{
 		let userId=new Array(10-digit).fill(0).join('')+(num+1);
 		//更新数据库
 
-		new User({
-			userId,
-			userName:param.userName,
-			userPwd:param.userPwd,
-			orderList:[],
-			cartList:[],
-			addressList:[]
-		})
-		.save()
-		.then(userDoc=>{
-			console.log('更新成功！');
-		})
-		.catch(err=>{
-			console.log(err.message);
-		});
-		///////
+// 		new User({
+// 			userId,
+// 			userName:param.userName,
+// 			userPwd:param.userPwd,
+// 			orderList:[],
+// 			cartList:[],
+// 			addressList:[]
+// 		})
+// 		.save()
+// 		.then(userDoc=>{
+// 			console.log('更新成功！');
+// 		})
+// 		.catch(err=>{
+// 			console.log(err.message);
+// 		});
+      User.update({userId},new User({
+        userId,
+        userName:param.userName,
+        userPwd:param.userPwd,
+        orderList:[],
+        cartList:[],
+        addressList:[]
+      }),{upsert:true})
+      .then(userDoc=>{
+        console.log('插入成功');
+      })
+      .catch(err=>{
+        console.log(err.message);
+      });
+		//返回注册数据
 		return ctx.body={
 			status:'0',
 			message:'注册成功',
